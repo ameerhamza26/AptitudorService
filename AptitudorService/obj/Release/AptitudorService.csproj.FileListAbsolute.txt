@@ -1,0 +1,10 @@
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\AptitudorService.dll.config
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\AptitudorService.dll
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\AptitudorService.pdb
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\EntityFramework.dll
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\EntityFramework.SqlServer.dll
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\EntityFramework.xml
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\bin\EntityFramework.SqlServer.xml
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\obj\Release\AptitudorService.dll
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\obj\Release\AptitudorService.pdb
+C:\Users\A\documents\visual studio 2013\Projects\AptitudorService\AptitudorService\obj\Release\AptitudorService.csprojResolveAssemblyReference.cache

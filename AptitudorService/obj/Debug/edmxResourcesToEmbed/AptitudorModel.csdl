@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AptitudorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Chapter">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubId" Type="Int32" Nullable="false" />
+    <Property Name="ClassId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Class" Relationship="Self.FK_Chapters_Class" FromRole="Chapters" ToRole="Class" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_Chapters_Subjects" FromRole="Chapters" ToRole="Subjects" />
+    <NavigationProperty Name="TestPapers" Relationship="Self.FK_TestPapers_Chapters" FromRole="Chapters" ToRole="TestPapers" />
+  </EntityType>
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Chapters" Relationship="Self.FK_Chapters_Class" FromRole="Class" ToRole="Chapters" />
+    <NavigationProperty Name="TestDetails" Relationship="Self.FK_TestDetails_Class" FromRole="Class" ToRole="TestDetails" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Chapters" Relationship="Self.FK_Chapters_Subjects" FromRole="Subjects" ToRole="Chapters" />
+    <NavigationProperty Name="TestPapers" Relationship="Self.FK_TestPapers_Subjects" FromRole="Subjects" ToRole="TestPapers" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TestDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Test_Time" Type="Int32" Nullable="false" />
+    <Property Name="Test_Max" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Class" Relationship="Self.FK_TestDetails_Class" FromRole="TestDetails" ToRole="Class" />
+    <NavigationProperty Name="UserMarks" Relationship="Self.FK_UserMarks_TestDetails" FromRole="TestDetails" ToRole="UserMarks" />
+  </EntityType>
+  <EntityType Name="TestPaper">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TestId" Type="Int32" Nullable="false" />
+    <Property Name="Question" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+    <Property Name="Option1" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Option2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Option3" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Option4" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="RightAns" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="SubId" Type="Int32" Nullable="false" />
+    <Property Name="ChapId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Chapter" Relationship="Self.FK_TestPapers_Chapters" FromRole="TestPapers" ToRole="Chapters" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_TestPapers_Subjects" FromRole="TestPapers" ToRole="Subjects" />
+  </EntityType>
+  <EntityType Name="UserMark">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="College" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TestId" Type="Int32" Nullable="false" />
+    <Property Name="Score" Type="Int32" />
+    <NavigationProperty Name="TestDetail" Relationship="Self.FK_UserMarks_TestDetails" FromRole="UserMarks" ToRole="TestDetails" />
+  </EntityType>
+  <Association Name="FK_Chapters_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="Chapters" Type="Self.Chapter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Chapters">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Chapters_Subjects">
+    <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+    <End Role="Chapters" Type="Self.Chapter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Chapters">
+        <PropertyRef Name="SubId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestPapers_Chapters">
+    <End Role="Chapters" Type="Self.Chapter" Multiplicity="1" />
+    <End Role="TestPapers" Type="Self.TestPaper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Chapters">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestPapers">
+        <PropertyRef Name="ChapId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestDetails_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="1" />
+    <End Role="TestDetails" Type="Self.TestDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestDetails">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TestPapers_Subjects">
+    <End Role="Subjects" Type="Self.Subject" Multiplicity="1" />
+    <End Role="TestPapers" Type="Self.TestPaper" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subjects">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TestPapers">
+        <PropertyRef Name="SubId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserMarks_TestDetails">
+    <End Role="TestDetails" Type="Self.TestDetail" Multiplicity="1" />
+    <End Role="UserMarks" Type="Self.UserMark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TestDetails">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserMarks">
+        <PropertyRef Name="TestId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AptitudorEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Chapters" EntityType="Self.Chapter" />
+    <EntitySet Name="Classes" EntityType="Self.Class" />
+    <EntitySet Name="Subjects" EntityType="Self.Subject" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TestDetails" EntityType="Self.TestDetail" />
+    <EntitySet Name="TestPapers" EntityType="Self.TestPaper" />
+    <EntitySet Name="UserMarks" EntityType="Self.UserMark" />
+    <AssociationSet Name="FK_Chapters_Class" Association="Self.FK_Chapters_Class">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="Chapters" EntitySet="Chapters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Chapters_Subjects" Association="Self.FK_Chapters_Subjects">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="Chapters" EntitySet="Chapters" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestPapers_Chapters" Association="Self.FK_TestPapers_Chapters">
+      <End Role="Chapters" EntitySet="Chapters" />
+      <End Role="TestPapers" EntitySet="TestPapers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestDetails_Class" Association="Self.FK_TestDetails_Class">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="TestDetails" EntitySet="TestDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TestPapers_Subjects" Association="Self.FK_TestPapers_Subjects">
+      <End Role="Subjects" EntitySet="Subjects" />
+      <End Role="TestPapers" EntitySet="TestPapers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserMarks_TestDetails" Association="Self.FK_UserMarks_TestDetails">
+      <End Role="TestDetails" EntitySet="TestDetails" />
+      <End Role="UserMarks" EntitySet="UserMarks" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(AptitudorModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(AptitudorModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>
